@@ -6,24 +6,26 @@
 #include "GameFramework/Character.h"
 #include "SPlayerCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
 UCLASS()
 class ELHARDRPG_API ASPlayerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	ASPlayerCharacter();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere, Category = "Camera")
+	USpringArmComponent* CameraBoom;
+	UPROPERTY(EditAnywhere,Category="Camera")
+	UCameraComponent* CameraComp;
 
+	virtual void BeginPlay() override;
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 };
