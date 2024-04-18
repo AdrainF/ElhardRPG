@@ -5,6 +5,7 @@
 #include <../../../../../../../Source/Runtime/Engine/Classes/GameFramework/SpringArmComponent.h>
 #include <../../../../../../../Source/Runtime/Engine/Classes/Camera/CameraComponent.h>
 #include <../../../../../../../Source/Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h>
+#include "SActionComponent.h"
 
 // Sets default values
 ASPlayerCharacter::ASPlayerCharacter()
@@ -21,6 +22,8 @@ ASPlayerCharacter::ASPlayerCharacter()
 	bUseControllerRotationYaw = false;
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	ActionComp = CreateDefaultSubobject<USActionComponent>("ActionComp");
 }
 
 void ASPlayerCharacter::BeginPlay()

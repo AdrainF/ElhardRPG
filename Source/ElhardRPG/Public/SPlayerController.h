@@ -26,6 +26,8 @@ public:
 		UInputAction* ActionLook = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionJump")
 		UInputAction* ActionJump = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionPrimaryAttack")
+		UInputAction* ActionPrimaryAttack = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput MappingContext")
 		TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 protected:
@@ -38,12 +40,15 @@ protected:
 
 	virtual void OnPossess(APawn* aPawn) override;
 
+	//Input handler functions
 	UFUNCTION()
 		void HandlerMove(const FInputActionValue& Value);
 	UFUNCTION()
 		void HandlerLook(const FInputActionValue& Value);
 	UFUNCTION()
 		void HandlerJump();
+	UFUNCTION()
+		void HandlerPrimaryAttack();
 
 
 };

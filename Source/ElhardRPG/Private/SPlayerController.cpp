@@ -5,6 +5,7 @@
 #include "SPlayerCharacter.h"
 #include <../../../../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputSubsystems.h>
 #include <../../../../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h>
+#include "SActionComponent.h"
 
 void ASPlayerController::OnPossess(APawn* aPawn)
 {
@@ -39,6 +40,10 @@ void ASPlayerController::OnPossess(APawn* aPawn)
 	if (ActionJump)
 	{
 		EnhancedInputComp->BindAction(ActionJump, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerJump);
+	}
+	if (ActionPrimaryAttack)
+	{
+		EnhancedInputComp->BindAction(ActionPrimaryAttack, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerPrimaryAttack);
 	}
 
 
@@ -82,4 +87,9 @@ void ASPlayerController::HandlerJump()
 		PlayerChar->Jump();
 	}
 
+}
+
+void ASPlayerController::HandlerPrimaryAttack()
+{
+	PlayerChar->ActionComp->StartActionByName(PlayerChar, "PrimaryAttack");
 }

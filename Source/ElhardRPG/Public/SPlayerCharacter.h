@@ -8,6 +8,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class USActionComponent;
 UCLASS()
 class ELHARDRPG_API ASPlayerCharacter : public ACharacter
 {
@@ -22,8 +23,12 @@ protected:
 	UPROPERTY(EditAnywhere,Category="Camera")
 	UCameraComponent* CameraComp;
 
+
 	virtual void BeginPlay() override;
 public:	
+		UPROPERTY(EditDefaultsOnly, Category="Action")
+	 USActionComponent* ActionComp;
+
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
