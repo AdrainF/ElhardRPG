@@ -6,6 +6,7 @@
 #include <../../../../../../../Source/Runtime/Engine/Classes/Camera/CameraComponent.h>
 #include <../../../../../../../Source/Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h>
 #include "SActionComponent.h"
+#include "SAttributeComponent.h"
 
 // Sets default values
 ASPlayerCharacter::ASPlayerCharacter()
@@ -24,12 +25,13 @@ ASPlayerCharacter::ASPlayerCharacter()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	ActionComp = CreateDefaultSubobject<USActionComponent>("ActionComp");
+	AttriComp = CreateDefaultSubobject<USAttributeComponent>("AttriComp");
 }
 
 void ASPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 void ASPlayerCharacter::Tick(float DeltaTime)
