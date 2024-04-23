@@ -30,15 +30,19 @@ bool USActionComponent::StartActionByName(AActor* Instigator, FName ActionName)
 	// We go through the array checking whether the action we started is available for the pawn
 	for (USAction* Action : Actions)
 	{
-	
-		if (Action && Action->ActionName==ActionName)
+
+		if (Action && Action->ActionName == ActionName)
 		{
-	//Calling the selected action function
+			if (!Action->CanStart(Instigator))
+			{
+					FString FailedMsg = FString::Printf(TEXT("Failed to run: %s"), *ActionName.ToString());
+					GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FailedMsg);
+				continue;
+			}
+			//Calling the selected action function
 			Action->ActionStart_Implementation(Instigator);
 			return true;
 		}
-
-		
 	}
 	return false;
 }
@@ -50,14 +54,28 @@ bool USActionComponent::StopActionByName(AActor* Instigator, FName ActionName)
 	{
 		if (Action && Action->ActionName == ActionName)
 		{
-			//Calling the selected action function
-			Action->ActionStop_Implementation(Instigator);
-			return true;
+			if (Action->IsRunning())
+			{
+				//Calling the selected action function
+				Action->ActionStop_Implementation(Instigator);
+				return true;
+			}
 		}
-
-
 	}
 	return false;
+
+}
+
+USAction* USActionComponent::GetActionByName(FName ActionName)
+{
+	for (USAction* Action : Actions)
+	{
+		if (Action && Action->ActionName == ActionName)
+		{
+			return Action;
+		}
+	}
+		return nullptr;
 
 }
 

@@ -33,11 +33,25 @@ public:
 	 */
 	UFUNCTION(BlueprintNativeEvent, Category = "Action")
 		void ActionStop(AActor* Instigator);
+	/*
+	*/
+	FGameplayTagContainer GetBlocingTags();
+	UFUNCTION(BlueprintNativeEvent)
+	 bool CanStart(AActor* Instigator);
+	/**
+	 * Return bIsRunning value
+	 */
+	UFUNCTION(BlueprintCallable)
+		bool IsRunning();
+
+	
 protected:
 	UPROPERTY(EditAnywhere, Category = "Tags")
 		FGameplayTagContainer GrantsTags;
 	UPROPERTY(EditAnywhere, Category = "Tags")
 		FGameplayTagContainer BlockingTags;
+	
+	 bool bIsRunning = false;
 	// Return object that USActonComponent resides in
 	UFUNCTION(BlueprintCallable, Category = "Action")
 		USActionComponent* GetOwningComponent() const;

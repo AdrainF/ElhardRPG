@@ -46,6 +46,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Action")
 		bool StopActionByName(AActor* Instigator, FName ActionName);
 
+	UFUNCTION(BlueprintCallable, Category = "Action")
+		USAction* GetActionByName(FName ActionName);
+
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 };

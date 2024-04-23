@@ -22,6 +22,8 @@ class ELHARDRPG_API ASPlayerController : public APlayerController
 public:
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionMove")
 		UInputAction* ActionMove = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionMove")
+		UInputAction* ActionMoveReleas = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionLook")
 		UInputAction* ActionLook = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionJump")
@@ -43,6 +45,8 @@ protected:
 	//Input handler functions
 	UFUNCTION()
 		void HandlerMove(const FInputActionValue& Value);
+	UFUNCTION()
+		void HandlerMoveReleas(const FInputActionValue& Value);
 	UFUNCTION()
 		void HandlerLook(const FInputActionValue& Value);
 	UFUNCTION()

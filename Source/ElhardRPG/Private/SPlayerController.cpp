@@ -6,6 +6,7 @@
 #include <../../../../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputSubsystems.h>
 #include <../../../../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h>
 #include "SActionComponent.h"
+#include "SAction.h"
 
 void ASPlayerController::OnPossess(APawn* aPawn)
 {
@@ -45,6 +46,10 @@ void ASPlayerController::OnPossess(APawn* aPawn)
 	{
 		EnhancedInputComp->BindAction(ActionPrimaryAttack, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerPrimaryAttack);
 	}
+	if (ActionMoveReleas)
+	{
+		EnhancedInputComp->BindAction(ActionMoveReleas, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerMoveReleas);
+	}
 
 
 }
@@ -62,11 +67,27 @@ void ASPlayerController::HandlerMove(const FInputActionValue& Value)
 
 	if (PlayerChar)
 	{
-		PlayerChar->AddMovementInput(ControlRot.Vector(),MovementVector.Y);
-		PlayerChar->AddMovementInput(RightVector, MovementVector.X);
+		//Adding Tags
+		PlayerChar->ActionComp->StartActionByName(PlayerChar, "Move");	
+		//Getting Action reference
+		USAction* MyAction = PlayerChar->ActionComp->GetActionByName("Move");
+		
+		//Check if we have no blocking tags
+		if (MyAction && MyAction->CanStart_Implementation(PlayerChar))
+		{
+			PlayerChar->AddMovementInput(ControlRot.Vector(), MovementVector.Y);
+			PlayerChar->AddMovementInput(RightVector, MovementVector.X);
+		}			
 	}
 	
+}
 
+void ASPlayerController::HandlerMoveReleas(const FInputActionValue& Value)
+{
+	if (PlayerChar)
+	{
+		PlayerChar->ActionComp->StopActionByName(PlayerChar, "Move");
+	}
 }
 
 void ASPlayerController::HandlerLook(const FInputActionValue& Value)
@@ -91,5 +112,8 @@ void ASPlayerController::HandlerJump()
 
 void ASPlayerController::HandlerPrimaryAttack()
 {
-	PlayerChar->ActionComp->StartActionByName(PlayerChar, "PrimaryAttack");
+	if (PlayerChar)
+	{
+		PlayerChar->ActionComp->StartActionByName(PlayerChar, "PrimaryAttack");
+	}
 }
