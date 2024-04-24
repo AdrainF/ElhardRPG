@@ -10,6 +10,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class USActionComponent;
 class USAttributeComponent;
+class USInteractionComponent;
 UCLASS()
 class ELHARDRPG_API ASPlayerCharacter : public ACharacter
 {
@@ -26,13 +27,16 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Attribute")
 		USAttributeComponent* AttriComp;
 
+
 	virtual void BeginPlay() override;
 public:
+		UPROPERTY(EditDefaultsOnly, Category = "Interact")
+		USInteractionComponent* InteractComp;
 	UPROPERTY(EditDefaultsOnly, Category = "Action")
 		USActionComponent* ActionComp;
-
+	
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
+	
 };

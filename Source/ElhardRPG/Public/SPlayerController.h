@@ -30,6 +30,8 @@ public:
 		UInputAction* ActionJump = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionPrimaryAttack")
 		UInputAction* ActionPrimaryAttack = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionPrimaryAttack")
+		UInputAction* ActionPrimaryInteract = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput MappingContext")
 		TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 protected:
@@ -53,6 +55,8 @@ protected:
 		void HandlerJump();
 	UFUNCTION()
 		void HandlerPrimaryAttack();
+	UFUNCTION()
+		void HandlerPrimaryInteract();
 
 
 };

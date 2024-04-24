@@ -7,6 +7,9 @@
 #include <../../../../../../../Source/Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h>
 #include "SActionComponent.h"
 #include "SAttributeComponent.h"
+#include "SInteractionComponent.h"
+
+
 
 // Sets default values
 ASPlayerCharacter::ASPlayerCharacter()
@@ -26,6 +29,8 @@ ASPlayerCharacter::ASPlayerCharacter()
 
 	ActionComp = CreateDefaultSubobject<USActionComponent>("ActionComp");
 	AttriComp = CreateDefaultSubobject<USAttributeComponent>("AttriComp");
+
+	InteractComp = CreateDefaultSubobject<USInteractionComponent>("InteractComp");
 }
 
 void ASPlayerCharacter::BeginPlay()

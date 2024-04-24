@@ -7,6 +7,7 @@
 #include <../../../../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h>
 #include "SActionComponent.h"
 #include "SAction.h"
+#include "SInteractionComponent.h"
 
 void ASPlayerController::OnPossess(APawn* aPawn)
 {
@@ -28,7 +29,7 @@ void ASPlayerController::OnPossess(APawn* aPawn)
 	checkf(InputMappingContext, TEXT("InputMappingContex was not specified"));
 
 	InputSubsystem->ClearAllMappings();
-	InputSubsystem->AddMappingContext(InputMappingContext,0);
+	InputSubsystem->AddMappingContext(InputMappingContext, 0);
 
 	if (ActionMove)
 	{
@@ -50,6 +51,10 @@ void ASPlayerController::OnPossess(APawn* aPawn)
 	{
 		EnhancedInputComp->BindAction(ActionMoveReleas, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerMoveReleas);
 	}
+	if (ActionPrimaryInteract)
+	{
+		EnhancedInputComp->BindAction(ActionPrimaryInteract, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerPrimaryInteract);
+	}
 
 
 }
@@ -68,18 +73,18 @@ void ASPlayerController::HandlerMove(const FInputActionValue& Value)
 	if (PlayerChar)
 	{
 		//Adding Tags
-		PlayerChar->ActionComp->StartActionByName(PlayerChar, "Move");	
+		PlayerChar->ActionComp->StartActionByName(PlayerChar, "Move");
 		//Getting Action reference
 		USAction* MyAction = PlayerChar->ActionComp->GetActionByName("Move");
-		
+
 		//Check if we have no blocking tags
 		if (MyAction && MyAction->CanStart_Implementation(PlayerChar))
 		{
 			PlayerChar->AddMovementInput(ControlRot.Vector(), MovementVector.Y);
 			PlayerChar->AddMovementInput(RightVector, MovementVector.X);
-		}			
+		}
 	}
-	
+
 }
 
 void ASPlayerController::HandlerMoveReleas(const FInputActionValue& Value)
@@ -115,5 +120,13 @@ void ASPlayerController::HandlerPrimaryAttack()
 	if (PlayerChar)
 	{
 		PlayerChar->ActionComp->StartActionByName(PlayerChar, "PrimaryAttack");
+	}
+}
+
+void ASPlayerController::HandlerPrimaryInteract()
+{
+	if (PlayerChar)
+	{
+		PlayerChar->InteractComp->PrimaryInteract();
 	}
 }
