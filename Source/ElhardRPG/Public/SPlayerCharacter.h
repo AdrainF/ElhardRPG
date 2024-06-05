@@ -26,15 +26,20 @@ protected:
 		UCameraComponent* CameraComp;
 	UPROPERTY(EditAnywhere, Category = "Attribute")
 		USAttributeComponent* AttriComp;
-
-
-	virtual void BeginPlay() override;
-public:
-		UPROPERTY(EditDefaultsOnly, Category = "Interact")
+	UPROPERTY(EditDefaultsOnly, Category = "Interact")
 		USInteractionComponent* InteractComp;
 	UPROPERTY(EditDefaultsOnly, Category = "Action")
 		USActionComponent* ActionComp;
+	virtual void BeginPlay() override;
 	
+public:
+	UFUNCTION(BlueprintCallable)
+		USActionComponent* GetActionComponent();
+	UFUNCTION(BlueprintCallable)
+		USpringArmComponent* GetCameraBoom();
+	UFUNCTION(BlueprintCallable)
+		USInteractionComponent* GetInteractionComponent();
+
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

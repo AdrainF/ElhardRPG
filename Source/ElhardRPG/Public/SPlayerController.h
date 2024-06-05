@@ -32,8 +32,18 @@ public:
 		UInputAction* ActionPrimaryAttack = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionPrimaryAttack")
 		UInputAction* ActionPrimaryInteract = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionFocusTarget")
+		UInputAction* ActionFocusTarget = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionBlock")
+		UInputAction* ActionBlock = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput MappingContext")
 		TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
+	UFUNCTION(BlueprintCallable)
+		void SetFocusTarget(bool Value);
+	UFUNCTION(BlueprintCallable)
+		bool GetIsBlocking();
+	
+
 protected:
 	// Used to store reference to controlled player pawn
 	UPROPERTY()
@@ -41,8 +51,13 @@ protected:
 	// Used to store a reference to the InputComponent cast to an EnhancedInputComponent.
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
 		UEnhancedInputComponent* EnhancedInputComp = nullptr;
+	//Check if we are focusing on the target
+	bool bFocusTarget = false;
+	bool bIsBlocking = false;
+	
 
 	virtual void OnPossess(APawn* aPawn) override;
+	virtual void PlayerTick(float DeltaTime);
 
 	//Input handler functions
 	UFUNCTION()
@@ -57,6 +72,12 @@ protected:
 		void HandlerPrimaryAttack();
 	UFUNCTION()
 		void HandlerPrimaryInteract();
+	UFUNCTION()
+		void HandlerFocusTarget();
+	UFUNCTION()
+		void HandlerBlockStart();
+	UFUNCTION()
+		void HandlerBlockStop();
 
 
 };

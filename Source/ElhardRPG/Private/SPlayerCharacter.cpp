@@ -39,6 +39,21 @@ void ASPlayerCharacter::BeginPlay()
 
 }
 
+USActionComponent* ASPlayerCharacter::GetActionComponent()
+{
+	return ActionComp;
+}
+
+USpringArmComponent* ASPlayerCharacter::GetCameraBoom()
+{
+	return CameraBoom;
+}
+
+USInteractionComponent* ASPlayerCharacter::GetInteractionComponent()
+{
+	return InteractComp;
+}
+
 void ASPlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

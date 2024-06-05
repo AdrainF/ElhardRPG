@@ -16,6 +16,13 @@ void USPrimaryAttack_Action::ActionStart_Implementation(AActor* Instigator)
 void USPrimaryAttack_Action::ActionStop_Implementation(AActor* Instigator)
 {
 	Super::ActionStop_Implementation(Instigator);
+	// Casting Instigator to ACharacter
+	ACharacter* MyCharacter = Cast<ACharacter>(Instigator);
+	// Check if actor that call the function was ACharacter type
+	if (MyCharacter)
+	{
+	
+	}
 
 }
 
@@ -36,6 +43,7 @@ void USPrimaryAttack_Action::SetNextAttack_Implementation(FName AttackName)
 
 void USPrimaryAttack_Action::PrimaryAttack(AActor* Instigator)
 {	
+
 	// Casting Instigator to ACharacter
 	ACharacter* MyCharacter = Cast<ACharacter>(Instigator);
 	// Check if actor that call the function was ACharacter type
@@ -44,6 +52,12 @@ void USPrimaryAttack_Action::PrimaryAttack(AActor* Instigator)
 		// Check if AnimClass was specified
 		if (ensure(AnimClass))
 		{
+			FRotator NewRotation = FRotator( MyCharacter->GetControlRotation());
+			NewRotation.Pitch = 0;
+			NewRotation.Roll = 0;
+
+			
+			MyCharacter->SetActorRotation(NewRotation);
 			// Start attack animation
 			MyCharacter->PlayAnimMontage(AnimClass, 1.f, PrimaryAttackName);
 

@@ -8,6 +8,17 @@
 #include "SActionComponent.h"
 #include "SAction.h"
 #include "SInteractionComponent.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
+
+void ASPlayerController::SetFocusTarget(bool Value)
+{
+	bFocusTarget = Value;
+}
+
+bool ASPlayerController::GetIsBlocking()
+{
+	return bIsBlocking;
+}
 
 void ASPlayerController::OnPossess(APawn* aPawn)
 {
@@ -55,7 +66,31 @@ void ASPlayerController::OnPossess(APawn* aPawn)
 	{
 		EnhancedInputComp->BindAction(ActionPrimaryInteract, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerPrimaryInteract);
 	}
+	if (ActionFocusTarget)
+	{
+		EnhancedInputComp->BindAction(ActionFocusTarget, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerFocusTarget);
+	}
+	if (ActionBlock)
+	{
+		EnhancedInputComp->BindAction(ActionBlock, ETriggerEvent::Started, this, &ASPlayerController::HandlerBlockStart);
+		EnhancedInputComp->BindAction(ActionBlock, ETriggerEvent::Completed, this, &ASPlayerController::HandlerBlockStop);
+	}
 
+}
+
+void ASPlayerController::PlayerTick(float DeltaTime)
+{
+	Super::PlayerTick(DeltaTime);
+
+	if (bFocusTarget)
+	{
+		PlayerChar->GetActionComponent()->StartActionByName(PlayerChar, "FocusTarget");
+	}
+	else
+	{
+		PlayerChar->GetActionComponent()->StopActionByName(PlayerChar, "FocusTarget");
+
+	}
 
 }
 
@@ -73,9 +108,9 @@ void ASPlayerController::HandlerMove(const FInputActionValue& Value)
 	if (PlayerChar)
 	{
 		//Adding Tags
-		PlayerChar->ActionComp->StartActionByName(PlayerChar, "Move");
+		PlayerChar->GetActionComponent()->StartActionByName(PlayerChar, "Move");
 		//Getting Action reference
-		USAction* MyAction = PlayerChar->ActionComp->GetActionByName("Move");
+		USAction* MyAction = PlayerChar->GetActionComponent()->GetActionByName("Move");
 
 		//Check if we have no blocking tags
 		if (MyAction && MyAction->CanStart_Implementation(PlayerChar))
@@ -91,7 +126,7 @@ void ASPlayerController::HandlerMoveReleas(const FInputActionValue& Value)
 {
 	if (PlayerChar)
 	{
-		PlayerChar->ActionComp->StopActionByName(PlayerChar, "Move");
+		PlayerChar->GetActionComponent()->StopActionByName(PlayerChar, "Move");
 	}
 }
 
@@ -119,7 +154,7 @@ void ASPlayerController::HandlerPrimaryAttack()
 {
 	if (PlayerChar)
 	{
-		PlayerChar->ActionComp->StartActionByName(PlayerChar, "PrimaryAttack");
+		PlayerChar->GetActionComponent()->StartActionByName(PlayerChar, "PrimaryAttack");
 	}
 }
 
@@ -127,6 +162,29 @@ void ASPlayerController::HandlerPrimaryInteract()
 {
 	if (PlayerChar)
 	{
-		PlayerChar->InteractComp->PrimaryInteract();
+		PlayerChar->GetInteractionComponent()->PrimaryInteract();
 	}
+}
+
+void ASPlayerController::HandlerFocusTarget()
+{
+	if (!bFocusTarget)
+	{
+		bFocusTarget = true;
+	}
+	else
+	{
+		bFocusTarget = false;
+	}
+}
+
+void ASPlayerController::HandlerBlockStart()
+{
+	
+	bIsBlocking = true;
+}
+
+void ASPlayerController::HandlerBlockStop()
+{
+	bIsBlocking = false;
 }
