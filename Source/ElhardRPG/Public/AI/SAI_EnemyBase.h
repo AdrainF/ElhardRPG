@@ -16,6 +16,7 @@ enum  EMovementEnum :uint8
 };
 
 
+
 class ASPatrolRoute;
 UCLASS()
 class ELHARDRPG_API ASAI_EnemyBase : public ACharacter
@@ -45,5 +46,4 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetMovementMode(EMovementEnum MovementMode);
-
 };

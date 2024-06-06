@@ -20,6 +20,7 @@ EBTNodeResult::Type USBTTask_SetMovementMode::ExecuteTask(UBehaviorTreeComponent
 	{
 		EMovementEnum MovementMode = static_cast<EMovementEnum>(MovementEnum.GetValue());
 		AIPawn->SetMovementMode(MovementMode);
+		
 		return EBTNodeResult::Succeeded;
 	}
 	return EBTNodeResult::Failed;

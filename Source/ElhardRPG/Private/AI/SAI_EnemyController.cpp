@@ -22,6 +22,8 @@ void ASAI_EnemyController::BeginPlay()
 		RunBehaviorTree(BehaviorTree);
 
 		APawn* MyPawn = UGameplayStatics::GetPlayerPawn(this, 0);
-		GetBlackboardComponent()->SetValueAsObject("TargetActor", MyPawn);
+		GetBlackboardComponent()->SetValueAsObject(TargetActorKeyName, MyPawn);
+		GetBlackboardComponent()->SetValueAsEnum(EnemyStateKeyName, EnemyStateEnum);
+
 	}
 }

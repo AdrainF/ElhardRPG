@@ -21,5 +21,5 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "AI")
 		TEnumAsByte<EMovementEnum> MovementEnum;
-
+	
 };

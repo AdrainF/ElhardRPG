@@ -62,4 +62,3 @@ void ASAI_EnemyBase::SetMovementMode(EMovementEnum MovementMode)
 		break;
 	}
 }
-
