@@ -16,9 +16,7 @@ class ELHARDRPG_API USPrimaryAttack_AnimNotifyState : public UAnimNotifyState
 	
 public:
 
-	bool Received_NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration, const FAnimNotifyEventReference& EventReference) const;
-	bool Received_NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, const FAnimNotifyEventReference& EventReference) const;
-	UPROPERTY(EditAnywhere)
+UPROPERTY(EditAnywhere)
 		FName PrimaryNextAttack = TEXT("Primary01");
 
 

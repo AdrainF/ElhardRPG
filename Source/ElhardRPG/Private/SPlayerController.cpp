@@ -58,6 +58,10 @@ void ASPlayerController::OnPossess(APawn* aPawn)
 	{
 		EnhancedInputComp->BindAction(ActionPrimaryAttack, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerPrimaryAttack);
 	}
+	if (ActionBasicAttack)
+	{
+		EnhancedInputComp->BindAction(ActionBasicAttack, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerBasicAttack);
+	}
 	if (ActionMoveReleas)
 	{
 		EnhancedInputComp->BindAction(ActionMoveReleas, ETriggerEvent::Triggered, this, &ASPlayerController::HandlerMoveReleas);
@@ -74,6 +78,11 @@ void ASPlayerController::OnPossess(APawn* aPawn)
 	{
 		EnhancedInputComp->BindAction(ActionBlock, ETriggerEvent::Started, this, &ASPlayerController::HandlerBlockStart);
 		EnhancedInputComp->BindAction(ActionBlock, ETriggerEvent::Completed, this, &ASPlayerController::HandlerBlockStop);
+	}
+	if (ActionDodge)
+	{
+		EnhancedInputComp->BindAction(ActionDodge, ETriggerEvent::Started, this, &ASPlayerController::HandlerDodge);
+		
 	}
 
 }
@@ -158,6 +167,14 @@ void ASPlayerController::HandlerPrimaryAttack()
 	}
 }
 
+void ASPlayerController::HandlerBasicAttack()
+{
+	if (PlayerChar)
+	{
+		PlayerChar->GetActionComponent()->StartActionByName(PlayerChar, "BasicAttack");
+	}
+}
+
 void ASPlayerController::HandlerPrimaryInteract()
 {
 	if (PlayerChar)
@@ -187,4 +204,12 @@ void ASPlayerController::HandlerBlockStart()
 void ASPlayerController::HandlerBlockStop()
 {
 	bIsBlocking = false;
+}
+
+void ASPlayerController::HandlerDodge()
+{
+	if (PlayerChar)
+	{
+		PlayerChar->GetActionComponent()->StartActionByName(PlayerChar, "Dodge");
+	}
 }

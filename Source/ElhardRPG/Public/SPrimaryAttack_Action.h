@@ -26,8 +26,8 @@ public:
 	 */
 	virtual void ActionStop_Implementation(AActor* Instigator) override;
 	// Function called over time
-	UFUNCTION()
-		void AttackDelay_Elapsed(ACharacter* CharacterActor);
+	//UFUNCTION()
+	//	void AttackDelay_Elapsed(ACharacter* CharacterActor);
 	// Function that set default primary attack
 	UFUNCTION(BlueprintNativeEvent)
 		void SetDefaultAttack();

@@ -4,7 +4,12 @@
 #include "AI/SAI_EnemyBase.h"
 #include "AI/SPatrolRoute.h"
 #include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h"
-
+#include "../../../../../../../Source/Runtime/AIModule/Classes/Perception/AIPerceptionComponent.h"
+#include "../../../../../../../Source/Runtime/AIModule/Classes/Perception/AIPerceptionSystem.h"
+#include "../../../../../../../Source/Runtime/AIModule/Classes/Perception/AISense_Sight.h"
+#include "../../../../../../../Source/Runtime/AIModule/Classes/Perception/AISense_Hearing.h"
+#include "../../../../../../../Source/Runtime/AIModule/Classes/Perception/AISense_Damage.h"
+#include "AI/SAI_EnemyController.h"
 
 // Sets default values
 ASAI_EnemyBase::ASAI_EnemyBase()
@@ -44,21 +49,30 @@ void ASAI_EnemyBase::MeleeAttack()
 
 void ASAI_EnemyBase::SetMovementMode(EMovementEnum MovementMode)
 {
+
+	AIMovement = MovementMode;
+
 	switch (MovementMode)
 	{
 	case Idle:
 		GetCharacterMovement()->MaxWalkSpeed = 0.0f;
 		break;
 	case Walk:
-		GetCharacterMovement()->MaxWalkSpeed = 100.0f;
+		GetCharacterMovement()->MaxWalkSpeed = 150.0f;
 		break;
 	case Run:
 		GetCharacterMovement()->MaxWalkSpeed = 300.0f;
 		break;
 	case Sprint:
-		GetCharacterMovement()->MaxWalkSpeed = 500.0f;
+		GetCharacterMovement()->MaxWalkSpeed = 550.0f;
 		break;
 	default:
 		break;
 	}
+
+}
+
+EMovementEnum ASAI_EnemyBase::GetMovementMode()
+{
+	return AIMovement;
 }

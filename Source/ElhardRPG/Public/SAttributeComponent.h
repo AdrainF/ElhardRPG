@@ -27,6 +27,8 @@ protected:
 	float StaminaMax=100.0f;
 	UPROPERTY(EditDefaultsOnly,Category="Attribute")
 	float Stamina= StaminaMax;
+	UPROPERTY(EditAnywhere, Category = "Tags")
+	FGameplayTagContainer BlockingTags;
 	
 	virtual void BeginPlay() override;
 
@@ -48,5 +50,8 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable)
 	 bool ApplyOnHealthChange(const float Delta);
+	UFUNCTION(BlueprintCallable)
+	bool CanBeDamaged(AActor* Owner);
+
 	
 };

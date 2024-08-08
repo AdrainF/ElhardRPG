@@ -14,10 +14,9 @@ enum  EMovementEnum :uint8
     Run		UMETA(DisplayName = "Run"),
     Sprint	UMETA(DisplayName = "Sprint")
 };
-
-
-
+class UAIPerceptionComponent;
 class ASPatrolRoute;
+class UAISense;
 UCLASS()
 class ELHARDRPG_API ASAI_EnemyBase : public ACharacter
 {
@@ -43,7 +42,13 @@ public:
 		UAnimMontage* AttackAnim = nullptr;
 	UPROPERTY(EditAnywhere, Category="AI")
 		ASPatrolRoute* PatrolRoute;
+	UPROPERTY(EditAnywhere,Category="Component")
+		UAIPerceptionComponent* PerceptionComp;
+
+	EMovementEnum AIMovement;
 
 	UFUNCTION(BlueprintCallable)
 	void SetMovementMode(EMovementEnum MovementMode);
+	UFUNCTION(BlueprintCallable)
+	EMovementEnum GetMovementMode();
 };

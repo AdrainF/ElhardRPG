@@ -2,6 +2,7 @@
 
 
 #include "SAttributeComponent.h"
+#include "SActionComponent.h"
 
 // Sets default values for this component's properties
 USAttributeComponent::USAttributeComponent()
@@ -44,5 +45,19 @@ bool USAttributeComponent::ApplyOnHealthChange(const float Delta)
 	Health = NewHealth;
 	OnHealthChange.Broadcast(nullptr, this, Health, Delta);
 	return true;
+}
+
+bool USAttributeComponent::CanBeDamaged(AActor* Owner)
+{
+	USActionComponent* ActionComp = Cast<USActionComponent>(Owner->GetComponentByClass(USActionComponent::StaticClass()));
+		if(ActionComp)
+		{
+			if (ActionComp->ActiveGameplayTags.HasAny(BlockingTags))
+			{
+				return false;
+			}
+			return true;
+		}
+		return true;
 }
 

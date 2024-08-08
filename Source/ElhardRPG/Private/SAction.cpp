@@ -25,7 +25,6 @@ void USAction::ActionStart_Implementation(AActor* Instigator)
 void USAction::ActionStop_Implementation(AActor* Instigator)
 {
 	UE_LOG(LogTemp, Log, TEXT("Stopped: %s"), *GetNameSafe(this));
-
 	ensureAlways(bIsRunning);
 	// Removing specified in Blueprint Tags
 	USActionComponent* Comp = GetOwningComponent();

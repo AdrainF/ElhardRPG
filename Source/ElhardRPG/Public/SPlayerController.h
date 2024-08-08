@@ -36,6 +36,10 @@ public:
 		UInputAction* ActionFocusTarget = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionBlock")
 		UInputAction* ActionBlock = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionBasicAttack")
+		UInputAction* ActionBasicAttack = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput Action | ActionDodge")
+		UInputAction* ActionDodge = nullptr;
 	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput MappingContext")
 		TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
 	UFUNCTION(BlueprintCallable)
@@ -71,6 +75,8 @@ protected:
 	UFUNCTION()
 		void HandlerPrimaryAttack();
 	UFUNCTION()
+		void HandlerBasicAttack();
+	UFUNCTION()
 		void HandlerPrimaryInteract();
 	UFUNCTION()
 		void HandlerFocusTarget();
@@ -78,6 +84,8 @@ protected:
 		void HandlerBlockStart();
 	UFUNCTION()
 		void HandlerBlockStop();
+	UFUNCTION()
+		void HandlerDodge();
 
 
 };
