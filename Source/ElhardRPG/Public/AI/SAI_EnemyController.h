@@ -34,7 +34,7 @@ class ELHARDRPG_API ASAI_EnemyController : public AAIController
 	GENERATED_BODY()
 	
 public:
-	ASAI_EnemyController();
+	ASAI_EnemyController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	
 	UFUNCTION(BlueprintCallable)
 	AActor* GetAttackTarget();
@@ -71,7 +71,7 @@ protected:
 	
 	void HandleSightSense(AActor* SensedActor);
 	void HandleHearingSense();
-	void HandleDamageSense(AActor* SensedActor);
+	void HandleDamageSense(AActor* SensedActor);	
 	UFUNCTION()
 	virtual void OnPerceptionUpdatedDelegate(const TArray<AActor*>& UpdatedActors) ;
 	UFUNCTION(BlueprintCallable)

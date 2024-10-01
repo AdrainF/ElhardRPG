@@ -46,6 +46,8 @@ public:
 		void SetFocusTarget(bool Value);
 	UFUNCTION(BlueprintCallable)
 		bool GetIsBlocking();
+
+
 	
 
 protected:
@@ -62,6 +64,8 @@ protected:
 
 	virtual void OnPossess(APawn* aPawn) override;
 	virtual void PlayerTick(float DeltaTime);
+
+	
 
 	//Input handler functions
 	UFUNCTION()

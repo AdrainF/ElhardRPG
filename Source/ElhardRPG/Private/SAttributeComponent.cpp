@@ -39,6 +39,18 @@ float USAttributeComponent::GetGetStaminaMax()
 	return StaminaMax;
 }
 
+bool USAttributeComponent::IsAlive()
+{
+	if (Health>0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 bool USAttributeComponent::ApplyOnHealthChange(const float Delta)
 {
 	float NewHealth = FMath::Clamp(Health + Delta, 0.f, HealthMax);

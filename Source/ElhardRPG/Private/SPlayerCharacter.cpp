@@ -8,6 +8,8 @@
 #include "SActionComponent.h"
 #include "SAttributeComponent.h"
 #include "SInteractionComponent.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Components/CapsuleComponent.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Components/SceneComponent.h"
 
 
 

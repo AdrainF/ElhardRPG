@@ -8,7 +8,10 @@
 #include "SActionComponent.h"
 #include "SAction.h"
 #include "SInteractionComponent.h"
-#include "../../../../../../../Source/Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
+#include "SAttributeComponent.h"
+#include "KismetTraceUtils.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/Engine/SkeletalMeshSocket.h"
+
 
 void ASPlayerController::SetFocusTarget(bool Value)
 {
@@ -19,6 +22,8 @@ bool ASPlayerController::GetIsBlocking()
 {
 	return bIsBlocking;
 }
+
+
 
 void ASPlayerController::OnPossess(APawn* aPawn)
 {
@@ -103,6 +108,7 @@ void ASPlayerController::PlayerTick(float DeltaTime)
 
 }
 
+
 void ASPlayerController::HandlerMove(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
@@ -172,6 +178,7 @@ void ASPlayerController::HandlerBasicAttack()
 	if (PlayerChar)
 	{
 		PlayerChar->GetActionComponent()->StartActionByName(PlayerChar, "BasicAttack");
+	
 	}
 }
 

@@ -17,6 +17,7 @@ enum  EMovementEnum :uint8
 class UAIPerceptionComponent;
 class ASPatrolRoute;
 class UAISense;
+class USAttributeComponent;
 UCLASS()
 class ELHARDRPG_API ASAI_EnemyBase : public ACharacter
 {
@@ -29,6 +30,11 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void PostInitializeComponents() override;
+
+	UFUNCTION()
+	void OnHealthChange( AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta);
+
 
 public:	
 	// Called every frame
@@ -38,12 +44,15 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void MeleeAttack();
+	
 	UPROPERTY(EditDefaultsOnly, Category = "AttackAnim")
 		UAnimMontage* AttackAnim = nullptr;
 	UPROPERTY(EditAnywhere, Category="AI")
 		ASPatrolRoute* PatrolRoute;
 	UPROPERTY(EditAnywhere,Category="Component")
 		UAIPerceptionComponent* PerceptionComp;
+	UPROPERTY(EditAnywhere,Category="Component")
+		USAttributeComponent* AttriComp;
 
 	EMovementEnum AIMovement;
 

@@ -30,6 +30,7 @@ protected:
 		USInteractionComponent* InteractComp;
 	UPROPERTY(EditDefaultsOnly, Category = "Action")
 		USActionComponent* ActionComp;
+
 	virtual void BeginPlay() override;
 	
 public:
@@ -39,6 +40,7 @@ public:
 		USpringArmComponent* GetCameraBoom();
 	UFUNCTION(BlueprintCallable)
 		USInteractionComponent* GetInteractionComponent();
+
 
 	virtual void Tick(float DeltaTime) override;
 

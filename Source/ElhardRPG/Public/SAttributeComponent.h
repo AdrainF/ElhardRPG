@@ -44,6 +44,8 @@ public:
 	float GetStamina();
 	UFUNCTION(BlueprintCallable)
 	float GetGetStaminaMax();
+	UFUNCTION(BlueprintCallable)
+	bool IsAlive();
 	/**
 	 * Function that change Character Health
 	 * @param Delta value of Health change

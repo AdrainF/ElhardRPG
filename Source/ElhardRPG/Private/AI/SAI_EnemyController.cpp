@@ -12,21 +12,20 @@
 #include "../../../../../../../Source/Runtime/AIModule/Classes/Perception/AISense_Hearing.h"
 #include "../../../../../../../Source/Runtime/AIModule/Classes/Perception/AISense_Damage.h"
 #include "../../../../../../../Source/Runtime/AIModule/Classes/Perception/AISenseConfig_Hearing.h"
+#include "SPlayerCharacter.h"
+#include "../../../../../../../Source/Runtime/AIModule/Classes/Navigation/CrowdFollowingComponent.h"
+#include "../../../../../../../Source/Runtime/Engine/Classes/GameFramework/Actor.h"
 
-ASAI_EnemyController::ASAI_EnemyController()
+ASAI_EnemyController::ASAI_EnemyController(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer.SetDefaultSubobjectClass<UCrowdFollowingComponent>(TEXT("PathFollowingComponent")))
 {
 	PerceptionComp = CreateDefaultSubobject<UAIPerceptionComponent>("PerceptionComp");
-
 	PerceptionComp->OnPerceptionUpdated.AddDynamic(this, &ASAI_EnemyController::OnPerceptionUpdatedDelegate);
-
 }
 
 void ASAI_EnemyController::SetEnemyState(EnemyState State)
 {
-	GetBlackboardComponent()->SetValueAsEnum(EnemyStateKeyName, State);
-
-	
-
+	GetBlackboardComponent()->SetValueAsEnum(EnemyStateKeyName, State);	
 }
 
 AActor* ASAI_EnemyController::GetAttackTarget()
@@ -50,14 +49,19 @@ void ASAI_EnemyController::SetIsFocusing(bool Value)
 	{
 		K2_ClearFocus();
 	}
-	
 }
 
 void ASAI_EnemyController::HandleSightSense(AActor*  SensedActor)
 {		
-	GetBlackboardComponent()->SetValueAsObject(TargetActorKeyName, SensedActor);
+	ASPlayerCharacter* PlayerChar = Cast<ASPlayerCharacter>(SensedActor);
+
+	if(PlayerChar)
+	{
+		GetBlackboardComponent()->SetValueAsObject(TargetActorKeyName, SensedActor);
 		SetEnemyState(EnemyState::Attacking);
 		TargtActor = SensedActor;
+	}
+
 }
 
 void ASAI_EnemyController::HandleHearingSense()
@@ -176,6 +180,16 @@ void ASAI_EnemyController::OnPossess(APawn* InPawn)
 void ASAI_EnemyController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	UCrowdFollowingComponent* CrowdFollowingController = FindComponentByClass<UCrowdFollowingComponent>();
+
+	if (CrowdFollowingController)
+	{
+		CrowdFollowingController->SetCrowdSeparation(true);
+		CrowdFollowingController->SetCrowdSeparationWeight(50.0f);
+		CrowdFollowingController->SetCrowdAvoidanceRangeMultiplier(1.1f);
+	}
+	
 
 	if (ensureMsgf(BehaviorTree, TEXT("Behavior Tree is nullptr!")))
 	{
